@@ -118,9 +118,9 @@ module scenes{
             }
 
             // generate random slots
-            this._spiner1index =Math.floor( Math.random() * 8 );
-            this._spiner2index =Math.floor( Math.random() * 8 );
-            this._spiner3index =Math.floor( Math.random() * 8 );
+            this._spiner1index =Math.floor( Math.random() * 8);
+            this._spiner2index =Math.floor( Math.random() * 8);
+            this._spiner3index =Math.floor( Math.random() * 8);
 
             console.log(this._spiner1index);
             console.log(this._spiner2index);
