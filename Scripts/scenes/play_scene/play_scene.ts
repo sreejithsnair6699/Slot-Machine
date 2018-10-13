@@ -109,7 +109,6 @@ module scenes{
             this._slotSound.volume = 0.1;
             this._SpinEffect();
             this._FindMultiplier();
-            this._balanceAmount += (this._betPointers[this._betPointerIndex] * this._multiplier); 
             this._multiplier = 0;    
             this._SetBalanceValue();
             this._SetWinValue();       
@@ -246,6 +245,8 @@ module scenes{
             else{
                 this._multiplier = 0;
             }
+            
+            this._balanceAmount += (this._betPointers[this._betPointerIndex] * this._multiplier); 
             this._countOfSlots = [0,0,0,0,0,0,0,0];
         }
 
@@ -266,12 +267,10 @@ module scenes{
         // Setting up balance amount
         private _SetBalanceValue():void{
             this._balanceValue.text = this._balanceAmount.toString();
-            managers.Game.balanceAmount = this._balanceAmount;
         }
 
         private _SetWinValue():void{
             this._winValue.text = this._wins.toString();
-            managers.Game.balanceAmount = this._balanceAmount;
         }
 
         // Setting up the Bet value
@@ -309,9 +308,7 @@ module scenes{
         }    
 
         public Update(): void {
-             
-            this._SetBalanceValue();
-            this._SetWinValue();  
+               
             if(this._isSpining){
                 this._frameCount ++;
                 if(this._frameCount <330 && this._frameCount%4 == 0){
