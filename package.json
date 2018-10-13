@@ -1,0 +1,15 @@
+{
+  "name": "slotmachine",
+  "version": "1.0.0",
+  "description": "Slot Machine Assignment",
+  "main": "index.js",
+  "repository": "https://github.com/sreejithsnair6699/Slot-Machine.git",
+  "author": "SJ <sreejithsanir6699@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "easeljs": "^1.0.2",
+    "preloadjs": "^1.0.1",
+    "soundjs": "^1.0.1",
+    "tweenjs": "^1.0.2"
+  }
+}
