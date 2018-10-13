@@ -37,11 +37,13 @@ module scenes{
         private _isSpining:boolean = false;
         private _countOfSlots:number[] = [0,0,0,0,0,0,0,0];
         private _multiplier:number = 0;
+        private _index:number = 7;
 
         // readonly variables
         private readonly _betPointers:number[] = [10, 25, 50, 100];
 
-
+        // audio 
+        private _slotSound:createjs.AbstractSoundInstance;
 
         // public properties
 
@@ -103,10 +105,15 @@ module scenes{
 
             this._balanceAmount -= this._betPointers[this._betPointerIndex];
             this._SetBalanceValue();
+            this._slotSound = createjs.Sound.play("slotSound");
+            this._slotSound.volume = 0.1;
             this._SpinEffect();
             this._FindMultiplier();
-            this._balanceAmount = this._balanceAmount + (this._betPointers[this._betPointerIndex] * this._multiplier);            
+            this._balanceAmount += (this._betPointers[this._betPointerIndex] * this._multiplier); 
+            this._multiplier = 0;    
             this._SetBalanceValue();
+            this._SetWinValue();       
+            
 
         }
 
@@ -118,13 +125,12 @@ module scenes{
             }
 
             // generate random slots
-            this._spiner1index =Math.floor( Math.random() * 8);
-            this._spiner2index =Math.floor( Math.random() * 8);
-            this._spiner3index =Math.floor( Math.random() * 8);
-
-            console.log(this._spiner1index);
-            console.log(this._spiner2index);
-            console.log(this._spiner3index);
+            this._Reels();
+            this._spiner1index = this._index;
+            this._Reels();
+            this._spiner2index =this._index;
+            this._Reels();
+            this._spiner3index =this._index;
 
             // assign the generated slots in corresponding position
             this._spinner1 = new objects.BitmapObject(this._slotArray[this._spiner1index], 155, 325, true);
@@ -145,10 +151,37 @@ module scenes{
             this.addChild(this._spinner3);
         }
 
+        private _Reels():void{
+            let temp:number = Math.floor((Math.random() * 65) + 1);
+            if(temp >= 1 && temp<27){
+                this._index = 7; 
+            }
+            else if(temp >= 27 && temp < 37){
+                this._index = 5;
+            }
+            else if(temp >= 38 && temp < 46){
+                this._index = 2;
+            }
+            else if(temp >= 47 && temp < 54){
+                this._index = 3;
+            }
+            else if(temp >= 55 && temp < 59){
+                this._index = 4;
+            }
+            else if(temp >= 60 && temp < 62){
+                this._index = 6;
+            }
+            else if(temp >= 63 && temp <= 64){
+                this._index = 1;
+            }
+            else if(temp == 65){
+                this._index = 0;
+            }
+            
+        }
         // Spinning Effect
         private _SpinEffect():void{
             this._isSpining = true;
-            this.Update();
         }
 
         // To find the winning combination and its corresponding multiplier
@@ -182,10 +215,6 @@ module scenes{
                 this._multiplier = 9;
                 this._wins++;
             }
-            else if(this._countOfSlots[7] == 3){
-                this._multiplier = 8;
-                this._wins++;
-            }
             else if(this._countOfSlots[0] == 2){
                 this._multiplier = 15;
                 this._wins++;
@@ -203,18 +232,14 @@ module scenes{
                 this._wins++;
             }
             else if(this._countOfSlots[4] == 2){
-                this._multiplier = 4;
-                this._wins++;
-            }
-            else if(this._countOfSlots[5] == 2){
                 this._multiplier = 3;
                 this._wins++;
             }
-            else if(this._countOfSlots[6] == 2){
+            else if(this._countOfSlots[5] == 2){
                 this._multiplier = 2;
                 this._wins++;
             }
-            else if(this._countOfSlots[7] == 2){
+            else if(this._countOfSlots[6] == 2){
                 this._multiplier = 1;
                 this._wins++;
             }
@@ -244,14 +269,18 @@ module scenes{
             managers.Game.balanceAmount = this._balanceAmount;
         }
 
+        private _SetWinValue():void{
+            this._winValue.text = this._wins.toString();
+            managers.Game.balanceAmount = this._balanceAmount;
+        }
+
         // Setting up the Bet value
         private _SetBetValue():void{
             this._betValue.text = this._betPointers[this._betPointerIndex].toString();
         }
 
         // Decrement the betPointers
-        private _Decrementer():void{
-            
+        private _Decrementer():void{     
             if (this._betPointerIndex > 0){
                 --this._betPointerIndex;
                 this._SetBetValue();
@@ -260,12 +289,10 @@ module scenes{
 
         // Increment the betPointers
         private _Incrementer():void{
-
             if (this._betPointerIndex < this._betPointers.length-1){
                 ++this._betPointerIndex;
                 this._SetBetValue();
             }
-
         }
 
 
@@ -282,13 +309,15 @@ module scenes{
         }    
 
         public Update(): void {
+             
+            this._SetBalanceValue();
+            this._SetWinValue();  
             if(this._isSpining){
                 this._frameCount ++;
-                if(this._frameCount <300 && this._frameCount%4 == 0){
+                if(this._frameCount <330 && this._frameCount%4 == 0){
                     this._Spinner();
-                    console.log(this._frameCount);
                 }
-                if(this._frameCount >= 300){
+                if(this._frameCount >= 330){
                     this._isSpining = false;
                     this._frameCount = 0;
                 }

@@ -27,6 +27,7 @@ var scenes;
             _this._isSpining = false;
             _this._countOfSlots = [0, 0, 0, 0, 0, 0, 0, 0];
             _this._multiplier = 0;
+            _this._index = 7;
             // readonly variables
             _this._betPointers = [10, 25, 50, 100];
             _this.Start();
@@ -70,10 +71,14 @@ var scenes;
         PlayScene.prototype._Spin = function () {
             this._balanceAmount -= this._betPointers[this._betPointerIndex];
             this._SetBalanceValue();
+            this._slotSound = createjs.Sound.play("slotSound");
+            this._slotSound.volume = 0.1;
             this._SpinEffect();
             this._FindMultiplier();
-            this._balanceAmount = this._balanceAmount + (this._betPointers[this._betPointerIndex] * this._multiplier);
+            this._balanceAmount += (this._betPointers[this._betPointerIndex] * this._multiplier);
+            this._multiplier = 0;
             this._SetBalanceValue();
+            this._SetWinValue();
         };
         PlayScene.prototype._Spinner = function () {
             if (this._spinner1 != null || this._spinner2 != null || this._spinner3 != null) {
@@ -82,12 +87,12 @@ var scenes;
                 this.removeChild(this._spinner3);
             }
             // generate random slots
-            this._spiner1index = Math.floor(Math.random() * 8);
-            this._spiner2index = Math.floor(Math.random() * 8);
-            this._spiner3index = Math.floor(Math.random() * 8);
-            console.log(this._spiner1index);
-            console.log(this._spiner2index);
-            console.log(this._spiner3index);
+            this._Reels();
+            this._spiner1index = this._index;
+            this._Reels();
+            this._spiner2index = this._index;
+            this._Reels();
+            this._spiner3index = this._index;
             // assign the generated slots in corresponding position
             this._spinner1 = new objects.BitmapObject(this._slotArray[this._spiner1index], 155, 325, true);
             this._spinner2 = new objects.BitmapObject(this._slotArray[this._spiner2index], 295, 325, true);
@@ -104,10 +109,36 @@ var scenes;
             this.addChild(this._spinner2);
             this.addChild(this._spinner3);
         };
+        PlayScene.prototype._Reels = function () {
+            var temp = Math.floor((Math.random() * 65) + 1);
+            if (temp >= 1 && temp < 27) {
+                this._index = 7;
+            }
+            else if (temp >= 27 && temp < 37) {
+                this._index = 5;
+            }
+            else if (temp >= 38 && temp < 46) {
+                this._index = 2;
+            }
+            else if (temp >= 47 && temp < 54) {
+                this._index = 3;
+            }
+            else if (temp >= 55 && temp < 59) {
+                this._index = 4;
+            }
+            else if (temp >= 60 && temp < 62) {
+                this._index = 6;
+            }
+            else if (temp >= 63 && temp <= 64) {
+                this._index = 1;
+            }
+            else if (temp == 65) {
+                this._index = 0;
+            }
+        };
         // Spinning Effect
         PlayScene.prototype._SpinEffect = function () {
             this._isSpining = true;
-            this.Update();
         };
         // To find the winning combination and its corresponding multiplier
         PlayScene.prototype._FindMultiplier = function () {
@@ -140,10 +171,6 @@ var scenes;
                 this._multiplier = 9;
                 this._wins++;
             }
-            else if (this._countOfSlots[7] == 3) {
-                this._multiplier = 8;
-                this._wins++;
-            }
             else if (this._countOfSlots[0] == 2) {
                 this._multiplier = 15;
                 this._wins++;
@@ -161,18 +188,14 @@ var scenes;
                 this._wins++;
             }
             else if (this._countOfSlots[4] == 2) {
-                this._multiplier = 4;
-                this._wins++;
-            }
-            else if (this._countOfSlots[5] == 2) {
                 this._multiplier = 3;
                 this._wins++;
             }
-            else if (this._countOfSlots[6] == 2) {
+            else if (this._countOfSlots[5] == 2) {
                 this._multiplier = 2;
                 this._wins++;
             }
-            else if (this._countOfSlots[7] == 2) {
+            else if (this._countOfSlots[6] == 2) {
                 this._multiplier = 1;
                 this._wins++;
             }
@@ -196,6 +219,10 @@ var scenes;
         // Setting up balance amount
         PlayScene.prototype._SetBalanceValue = function () {
             this._balanceValue.text = this._balanceAmount.toString();
+            managers.Game.balanceAmount = this._balanceAmount;
+        };
+        PlayScene.prototype._SetWinValue = function () {
+            this._winValue.text = this._wins.toString();
             managers.Game.balanceAmount = this._balanceAmount;
         };
         // Setting up the Bet value
@@ -225,13 +252,14 @@ var scenes;
             this.Main();
         };
         PlayScene.prototype.Update = function () {
+            this._SetBalanceValue();
+            this._SetWinValue();
             if (this._isSpining) {
                 this._frameCount++;
-                if (this._frameCount < 300 && this._frameCount % 4 == 0) {
+                if (this._frameCount < 330 && this._frameCount % 4 == 0) {
                     this._Spinner();
-                    console.log(this._frameCount);
                 }
-                if (this._frameCount >= 300) {
+                if (this._frameCount >= 330) {
                     this._isSpining = false;
                     this._frameCount = 0;
                 }

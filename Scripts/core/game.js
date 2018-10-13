@@ -24,7 +24,8 @@
         { id: "diamond", src: "/Assets/images/diamond.png" },
         { id: "grapes", src: "/Assets/images/grapes.png" },
         { id: "seven", src: "/Assets/images/seven.png" },
-        { id: "strawberry", src: "/Assets/images/strawberry.png" }
+        { id: "strawberry", src: "/Assets/images/strawberry.png" },
+        { id: "slotSound", src: "/Assets/audios/slot_machine_sound.mp3" }
     ];
     function Init() {
         assetManager = new createjs.LoadQueue();
