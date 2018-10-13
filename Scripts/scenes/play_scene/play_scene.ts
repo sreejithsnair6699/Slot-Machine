@@ -24,9 +24,10 @@ module scenes{
         private _balanceText:objects.Label;
         private _balanceValue:objects.Label;
         private _betValue:objects.Label;
+        private _balanceNote:objects.Label;
 
         // variables
-        private _balanceAmount:number = 4000;
+        private _balanceAmount:number = 1500;
         private _wins:number = 0;
         private _betPointerIndex:number = 0;
         private _slotArray:string[];
@@ -73,9 +74,12 @@ module scenes{
 
             this._winText = new objects.Label("Wins: ", "30px", "Comic Sans MS", "#FFFF00", 10, 10, false);
             this._winValue = new objects.Label("0", "30px", "Comic Sans MS", "#FFFF00", 100, 10, false);
+            this._balanceNote = new objects.Label("Insufficient Balance ... !", "30px", "Comic Sans MS", "#FFFF00", 140, 530, false);
             this._balanceText = new objects.Label("Balance: ", "30px", "Comic Sans MS", "#76FF03", 380, 10, false);
             this._balanceValue = new objects.Label("0", "30px", "Comic Sans MS", "#76FF03", 510, 10, false);
             this._betValue = new objects.Label(this._betPointers[this._betPointerIndex].toString(), "40px", "Comic Sans MS", "#004D40", 150, 675, true);
+
+            this._balanceNote.alpha = 0.0;
 
             this.addChild(this._background);
             this.addChild(this._darkener);
@@ -92,6 +96,7 @@ module scenes{
             this.addChild(this._winValue);
             this.addChild(this._balanceValue);
             this.addChild(this._betValue);
+            this.addChild(this._balanceNote);
 
         }
 
@@ -103,6 +108,10 @@ module scenes{
         // Setting up Spin function
         private _Spin():void{
 
+            if(this._balanceAmount < this._betPointers[this._betPointerIndex]){
+                this._balanceNote.alpha = 1.0;
+                return;
+            }
             this._balanceAmount -= this._betPointers[this._betPointerIndex];
             this._SetBalanceValue();
             this._slotSound = createjs.Sound.play("slotSound");

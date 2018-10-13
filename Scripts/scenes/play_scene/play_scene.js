@@ -20,7 +20,7 @@ var scenes;
         function PlayScene() {
             var _this = _super.call(this) || this;
             // variables
-            _this._balanceAmount = 4000;
+            _this._balanceAmount = 1500;
             _this._wins = 0;
             _this._betPointerIndex = 0;
             _this._frameCount = 0;
@@ -46,9 +46,11 @@ var scenes;
             this._buttonSpin = new objects.Button("buttonSpin", 400, 675, true);
             this._winText = new objects.Label("Wins: ", "30px", "Comic Sans MS", "#FFFF00", 10, 10, false);
             this._winValue = new objects.Label("0", "30px", "Comic Sans MS", "#FFFF00", 100, 10, false);
+            this._balanceNote = new objects.Label("Insufficient Balance ... !", "30px", "Comic Sans MS", "#FFFF00", 140, 530, false);
             this._balanceText = new objects.Label("Balance: ", "30px", "Comic Sans MS", "#76FF03", 380, 10, false);
             this._balanceValue = new objects.Label("0", "30px", "Comic Sans MS", "#76FF03", 510, 10, false);
             this._betValue = new objects.Label(this._betPointers[this._betPointerIndex].toString(), "40px", "Comic Sans MS", "#004D40", 150, 675, true);
+            this._balanceNote.alpha = 0.0;
             this.addChild(this._background);
             this.addChild(this._darkener);
             this.addChild(this._slotMachine);
@@ -62,6 +64,7 @@ var scenes;
             this.addChild(this._winValue);
             this.addChild(this._balanceValue);
             this.addChild(this._betValue);
+            this.addChild(this._balanceNote);
         };
         // Load Image Array
         PlayScene.prototype._LoadSlots = function () {
@@ -69,13 +72,16 @@ var scenes;
         };
         // Setting up Spin function
         PlayScene.prototype._Spin = function () {
+            if (this._balanceAmount < this._betPointers[this._betPointerIndex]) {
+                this._balanceNote.alpha = 1.0;
+                return;
+            }
             this._balanceAmount -= this._betPointers[this._betPointerIndex];
             this._SetBalanceValue();
             this._slotSound = createjs.Sound.play("slotSound");
             this._slotSound.volume = 0.1;
             this._SpinEffect();
             this._FindMultiplier();
-            this._balanceAmount += (this._betPointers[this._betPointerIndex] * this._multiplier);
             this._multiplier = 0;
             this._SetBalanceValue();
             this._SetWinValue();
@@ -202,6 +208,7 @@ var scenes;
             else {
                 this._multiplier = 0;
             }
+            this._balanceAmount += (this._betPointers[this._betPointerIndex] * this._multiplier);
             this._countOfSlots = [0, 0, 0, 0, 0, 0, 0, 0];
         };
         // To find the number of occurance of same slot component in a spin. 
@@ -219,11 +226,9 @@ var scenes;
         // Setting up balance amount
         PlayScene.prototype._SetBalanceValue = function () {
             this._balanceValue.text = this._balanceAmount.toString();
-            managers.Game.balanceAmount = this._balanceAmount;
         };
         PlayScene.prototype._SetWinValue = function () {
             this._winValue.text = this._wins.toString();
-            managers.Game.balanceAmount = this._balanceAmount;
         };
         // Setting up the Bet value
         PlayScene.prototype._SetBetValue = function () {
@@ -252,8 +257,6 @@ var scenes;
             this.Main();
         };
         PlayScene.prototype.Update = function () {
-            this._SetBalanceValue();
-            this._SetWinValue();
             if (this._isSpining) {
                 this._frameCount++;
                 if (this._frameCount < 330 && this._frameCount % 4 == 0) {
