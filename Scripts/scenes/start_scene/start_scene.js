@@ -26,6 +26,9 @@ var scenes;
         // private methods
         // public methods
         StartScene.prototype.Start = function () {
+            this._background = new objects.BitmapObject("background");
+            this._gameTitle = new objects.BitmapObject("gameTitle", 0, 120, false);
+            this._buttonPlayNow = new objects.Button("buttonPlayNow", 300, 550, true);
             this.Main();
         };
         StartScene.prototype.Update = function () {
@@ -41,16 +44,17 @@ var scenes;
             }
         };
         StartScene.prototype.Destroy = function () {
+            this.removeAllChildren();
         };
         StartScene.prototype.Reset = function () {
         };
         StartScene.prototype.Main = function () {
-            this._background = new objects.BitmapObject("background");
             this.addChild(this._background);
-            this._gameTitle = new objects.BitmapObject("gameTitle", 0, 120, false);
             this.addChild(this._gameTitle);
-            this._buttonPlayNow = new objects.Button("buttonPlayNow", 300, 550, true);
             this.addChild(this._buttonPlayNow);
+            this._buttonPlayNow.on("click", function () {
+                managers.Game.currentState = config.Scene.PLAY;
+            });
         };
         return StartScene;
     }(scenes.Scene));

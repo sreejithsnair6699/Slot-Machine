@@ -3,5 +3,6 @@ module managers{
         // globals
         public static assetManager:createjs.LoadQueue;
         public static stage:createjs.Stage;
+        public static currentState:config.Scene;
     }
 }

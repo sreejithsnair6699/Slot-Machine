@@ -21,7 +21,11 @@ module scenes{
 
         // public methods
         public Start(): void {
-           this.Main();
+            this._background = new objects.BitmapObject("background");
+            this._gameTitle = new objects.BitmapObject("gameTitle", 0, 120, false);
+            this._buttonPlayNow = new objects.Button("buttonPlayNow", 300, 550, true);
+
+            this.Main();
         }    
 
         public Update(): void {
@@ -38,7 +42,7 @@ module scenes{
         }
 
         public Destroy(): void {
-            
+            this.removeAllChildren();
         }
 
         public Reset(): void {
@@ -46,14 +50,15 @@ module scenes{
         }
         
         public Main(): void {
-            this._background = new objects.BitmapObject("background");
             this.addChild(this._background);
     
-            this._gameTitle = new objects.BitmapObject("gameTitle", 0, 120, false);
             this.addChild(this._gameTitle);
     
-            this._buttonPlayNow = new objects.Button("buttonPlayNow", 300, 550, true);
             this.addChild(this._buttonPlayNow);
+
+            this._buttonPlayNow.on("click", ()=>{
+                managers.Game.currentState = config.Scene.PLAY;
+            });
         }
 
 
