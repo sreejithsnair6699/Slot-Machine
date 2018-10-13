@@ -64,6 +64,7 @@ module objects{
             this.y = y;
 
             // event listeners
+            
             this.on("mouseover", this._over);
             this.on("mouseout", this._out);
 
@@ -82,7 +83,6 @@ module objects{
         }
 
         // public methods
-
 
     }
 }

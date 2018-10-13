@@ -15,10 +15,17 @@
         { id: "buttonAdd", src: "/Assets/images/button_add.png" },
         { id: "buttonReduce", src: "/Assets/images/button_reduce.png" },
         { id: "textboxBetAmount", src: "/Assets/images/textbox_bet_amount.png" },
-        { id: "darkener", src: "/Assets/images/darkener.png" }
+        { id: "darkener", src: "/Assets/images/darkener.png" },
+        { id: "buttonReplay", src: "/Assets/images/button_replay.png" },
+        { id: "bar", src: "/Assets/images/bar.png" },
+        { id: "bell", src: "/Assets/images/bell.png" },
+        { id: "cherry", src: "/Assets/images/cherry.png" },
+        { id: "crown", src: "/Assets/images/crown.png" },
+        { id: "diamond", src: "/Assets/images/diamond.png" },
+        { id: "grapes", src: "/Assets/images/grapes.png" },
+        { id: "seven", src: "/Assets/images/seven.png" },
+        { id: "strawberry", src: "/Assets/images/strawberry.png" }
     ];
-    var frame = 0;
-    var bouncer = 0;
     function Init() {
         assetManager = new createjs.LoadQueue();
         managers.Game.assetManager = assetManager; // creates reference to global asset managaer
@@ -48,6 +55,7 @@
     function Main() {
         if (currentScene) {
             currentScene.Destroy();
+            stage.removeAllChildren();
         }
         switch (currentState) {
             case config.Scene.START:
@@ -55,6 +63,9 @@
                 break;
             case config.Scene.PLAY:
                 currentScene = new scenes.PlayScene();
+                break;
+            case config.Scene.END:
+                currentScene = new scenes.EndScene();
                 break;
         }
         stage.addChild(currentScene);
