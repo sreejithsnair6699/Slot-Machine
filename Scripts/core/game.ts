@@ -2,13 +2,32 @@
     //game variables
     let canvas:HTMLCanvasElement;
     let stage:createjs.Stage;
-    let background:createjs.Bitmap;
-    let gameTitle:createjs.Bitmap;
-    let buttonPlayNow:createjs.Bitmap;
+    let assetManager:createjs.LoadQueue;
+
+    let startScene:scenes.StartScene;
+
+    let assetManifest = [
+        {id: "background", src:"/Assets/images/background.png"},
+        {id: "gameTitle", src:"/Assets/images/game_title.png"},
+        {id: "buttonPlayNow", src:"/Assets/images/button_play_now.png"}
+    ];
+    let frame:number = 0;
+    let bouncer:number = 0;
+
+    function Init():void{
+        assetManager = new createjs.LoadQueue();
+        managers.Game.assetManager = assetManager; // creates reference to global asset managaer
+
+        assetManager.installPlugin(createjs.Sound); // enable sound preloading
+        assetManager.loadManifest(assetManifest); // preloads all assets in manifest
+
+        assetManager.on("complete", Start); // call Start when assets are finished loading
+    }
 
     function Start():void{
         canvas = document.getElementsByTagName("canvas")[0];
         stage = new createjs.Stage(canvas);
+        managers.Game.stage = stage;
         stage.enableMouseOver(20);
         createjs.Ticker.framerate = 60; // 60 fps
         createjs.Ticker.on("tick", Update);
@@ -16,36 +35,17 @@
     }
 
     function Update():void{
+        startScene.Update();
         stage.update();
     }
 
     function Main():void{
-        background = new createjs.Bitmap("/Assets/images/background.png");
-        gameTitle = new createjs.Bitmap("/Assets/images/game_title.png");
-        buttonPlayNow = new createjs.Bitmap("/Assets/images/button_play_now.png");
+        // start scene
+        startScene = new scenes.StartScene();
+        stage.addChild(startScene);
 
-        gameTitle.y = 120;
-
-        buttonPlayNow.x = 120;
-        buttonPlayNow.y = 500;
-
-        stage.addChild(background);
-        stage.addChild(gameTitle);
-        stage.addChild(buttonPlayNow);
-
-        buttonPlayNow.on("click", function(){
-            
-        });
-
-        buttonPlayNow.on("mouseover", function(){
-            buttonPlayNow.alpha = 0.8;
-        });
-
-        buttonPlayNow.on("mouseout", function(){
-            buttonPlayNow.alpha = 1.0;
-        });
     }
 
-    window.addEventListener("load", Start);
+    window.addEventListener("load", Init);
 
 })();

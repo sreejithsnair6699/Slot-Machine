@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Slot Machine</title>
 
-    <!-- CSS Section-->
-
+    <!-- CSS Section -->
     <link rel="stylesheet" href="Content/game.css">
 
 
@@ -15,12 +14,27 @@
 <body>
     <canvas id="canvas" width="600" height="750"></canvas>   
     
-    <!-- JavaScript Section-->
+    <!-- JavaScript Section -->
+    <!-- Libraries -->
+    <script src="/node_modules/easeljs/lib/easeljs.min.js"></script>
+    <script src="/node_modules/tweenjs/lib/tweenjs.min.js"></script>
+    <script src="/node_modules/soundjs/lib/soundjs.min.js"></script>
+    <script src="/node_modules/preloadjs/lib/preloadjs.min.js"></script>
 
-    <script src="node_modules/easeljs/lib/easeljs.min.js"></script>
-    <script src="node_modules/tweenjs/lib/tweenjs.min.js"></script>
-    <script src="node_modules/soundjs/lib/soundjs.min.js"></script>
-    <script src="node_modules/preloadjs/lib/preloadjs.min.js"></script>
+    <!-- Game Scripts -->
+    <!-- Managers -->
+    <script src="/Scripts/managers/game_manager/game.js"></script> <!-- need to loaded first -->
+
+    <!-- Objects -->
+    <script src="/Scripts/objects/labels/label.js"></script>
+    <script src="/Scripts/objects/buttons/button.js"></script>
+    <script src="/Scripts/objects/bitmap_objects/bitmap_object.js"></script>
+
+    <!-- Scenes -->
+    <script src="/Scripts/scenes/scene/scene.js"></script>
+    <script src="/Scripts/scenes/start_scene/start_scene.js"></script>
+
+    <!-- Core -->
     <script src="Scripts/core/game.js"></script>
 
 </body>

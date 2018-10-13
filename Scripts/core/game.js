@@ -2,39 +2,40 @@
     //game variables
     var canvas;
     var stage;
-    var background;
-    var gameTitle;
-    var buttonPlayNow;
+    var assetManager;
+    var startScene;
+    var assetManifest = [
+        { id: "background", src: "/Assets/images/background.png" },
+        { id: "gameTitle", src: "/Assets/images/game_title.png" },
+        { id: "buttonPlayNow", src: "/Assets/images/button_play_now.png" }
+    ];
+    var frame = 0;
+    var bouncer = 0;
+    function Init() {
+        assetManager = new createjs.LoadQueue();
+        managers.Game.assetManager = assetManager; // creates reference to global asset managaer
+        assetManager.installPlugin(createjs.Sound); // enable sound preloading
+        assetManager.loadManifest(assetManifest); // preloads all assets in manifest
+        assetManager.on("complete", Start); // call Start when assets are finished loading
+    }
     function Start() {
         canvas = document.getElementsByTagName("canvas")[0];
         stage = new createjs.Stage(canvas);
+        managers.Game.stage = stage;
         stage.enableMouseOver(20);
         createjs.Ticker.framerate = 60; // 60 fps
         createjs.Ticker.on("tick", Update);
         Main();
     }
     function Update() {
+        startScene.Update();
         stage.update();
     }
     function Main() {
-        background = new createjs.Bitmap("/Assets/images/background.png");
-        gameTitle = new createjs.Bitmap("/Assets/images/game_title.png");
-        buttonPlayNow = new createjs.Bitmap("/Assets/images/button_play_now.png");
-        gameTitle.y = 120;
-        buttonPlayNow.x = 120;
-        buttonPlayNow.y = 500;
-        stage.addChild(background);
-        stage.addChild(gameTitle);
-        stage.addChild(buttonPlayNow);
-        buttonPlayNow.on("click", function () {
-        });
-        buttonPlayNow.on("mouseover", function () {
-            buttonPlayNow.alpha = 0.8;
-        });
-        buttonPlayNow.on("mouseout", function () {
-            buttonPlayNow.alpha = 1.0;
-        });
+        // start scene
+        startScene = new scenes.StartScene();
+        stage.addChild(startScene);
     }
-    window.addEventListener("load", Start);
+    window.addEventListener("load", Init);
 })();
 //# sourceMappingURL=game.js.map
