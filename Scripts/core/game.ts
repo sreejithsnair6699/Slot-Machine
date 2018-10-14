@@ -28,6 +28,8 @@
         {id: "grapes", src:"/Assets/images/grapes.png"},
         {id: "seven", src:"/Assets/images/seven.png"},
         {id: "strawberry", src:"/Assets/images/strawberry.png"},
+
+        {id: "backgroundSound", src:"/Assets/audios/background_music.mp3"},
         {id: "slotSound", src:"/Assets/audios/slot_machine_sound.mp3"}
     ];
 

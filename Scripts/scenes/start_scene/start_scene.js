@@ -29,6 +29,9 @@ var scenes;
             this._background = new objects.BitmapObject("background");
             this._gameTitle = new objects.BitmapObject("gameTitle", 0, 120, false);
             this._buttonPlayNow = new objects.Button("buttonPlayNow", 300, 550, true);
+            this._backgroundSound = createjs.Sound.play("backgroundSound");
+            this._backgroundSound.volume = 0.05;
+            this._backgroundSound.loop = -1; // loop forever
             this.Main();
         };
         StartScene.prototype.Update = function () {
