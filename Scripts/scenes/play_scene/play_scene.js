@@ -118,7 +118,7 @@ var scenes;
         PlayScene.prototype._Reels = function () {
             var temp = Math.floor((Math.random() * 65) + 1);
             if (temp >= 1 && temp < 27) {
-                this._index = 7;
+                this._index = 0;
             }
             else if (temp >= 27 && temp < 37) {
                 this._index = 5;
@@ -139,7 +139,7 @@ var scenes;
                 this._index = 1;
             }
             else if (temp == 65) {
-                this._index = 0;
+                this._index = 7;
             }
         };
         // Spinning Effect

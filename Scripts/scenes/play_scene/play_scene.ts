@@ -162,7 +162,7 @@ module scenes{
         private _Reels():void{
             let temp:number = Math.floor((Math.random() * 65) + 1);
             if(temp >= 1 && temp<27){
-                this._index = 7; 
+                this._index = 0; 
             }
             else if(temp >= 27 && temp < 37){
                 this._index = 5;
@@ -183,7 +183,7 @@ module scenes{
                 this._index = 1;
             }
             else if(temp == 65){
-                this._index = 0;
+                this._index = 7;
             }
             
         }
