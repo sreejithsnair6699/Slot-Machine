@@ -8,29 +8,29 @@
     let currentState:config.Scene;
 
     let assetManifest = [
-        {id: "background", src:"/Assets/images/background.png"},
-        {id: "gameTitle", src:"/Assets/images/game_title.png"},
-        {id: "buttonPlayNow", src:"/Assets/images/button_play_now.png"},
-        {id: "slotMachine", src:"/Assets/images/slot_machine.png"},
-        {id: "buttonBet", src:"/Assets/images/button_bet.png"},
-        {id: "buttonSpin", src:"/Assets/images/button_spin.png"},
-        {id: "buttonAdd", src:"/Assets/images/button_add.png"},
-        {id: "buttonReduce", src:"/Assets/images/button_reduce.png"},
-        {id: "textboxBetAmount", src:"/Assets/images/textbox_bet_amount.png"},
-        {id: "darkener", src:"/Assets/images/darkener.png"},
-        {id: "buttonReplay", src:"/Assets/images/button_replay.png"},
+        {id: "background", src:"./Assets/images/background.png"},
+        {id: "gameTitle", src:"./Assets/images/game_title.png"},
+        {id: "buttonPlayNow", src:"./Assets/images/button_play_now.png"},
+        {id: "slotMachine", src:"./Assets/images/slot_machine.png"},
+        {id: "buttonBet", src:"./Assets/images/button_bet.png"},
+        {id: "buttonSpin", src:"./Assets/images/button_spin.png"},
+        {id: "buttonAdd", src:"./Assets/images/button_add.png"},
+        {id: "buttonReduce", src:"./Assets/images/button_reduce.png"},
+        {id: "textboxBetAmount", src:"./Assets/images/textbox_bet_amount.png"},
+        {id: "darkener", src:"./Assets/images/darkener.png"},
+        {id: "buttonReplay", src:"./Assets/images/button_replay.png"},
 
-        {id: "bar", src:"/Assets/images/bar.png"},
-        {id: "bell", src:"/Assets/images/bell.png"},
-        {id: "cherry", src:"/Assets/images/cherry.png"},
-        {id: "crown", src:"/Assets/images/crown.png"},
-        {id: "diamond", src:"/Assets/images/diamond.png"},
-        {id: "grapes", src:"/Assets/images/grapes.png"},
-        {id: "seven", src:"/Assets/images/seven.png"},
-        {id: "strawberry", src:"/Assets/images/strawberry.png"},
+        {id: "bar", src:"./Assets/images/bar.png"},
+        {id: "bell", src:"./Assets/images/bell.png"},
+        {id: "cherry", src:"./Assets/images/cherry.png"},
+        {id: "crown", src:"./Assets/images/crown.png"},
+        {id: "diamond", src:"./Assets/images/diamond.png"},
+        {id: "grapes", src:"./Assets/images/grapes.png"},
+        {id: "seven", src:"./Assets/images/seven.png"},
+        {id: "strawberry", src:"./Assets/images/strawberry.png"},
 
-        {id: "backgroundSound", src:"/Assets/audios/background_music.mp3"},
-        {id: "slotSound", src:"/Assets/audios/slot_machine_sound.mp3"}
+        {id: "backgroundSound", src:"./Assets/audios/background_music.mp3"},
+        {id: "slotSound", src:"./Assets/audios/slot_machine_sound.mp3"}
     ];
 
     function Init():void{
